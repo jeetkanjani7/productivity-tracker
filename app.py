@@ -438,7 +438,7 @@ def show_activity_form(user_id: str, habits: list):
     with col3:
         habit_options = {habit['name']: habit['id'] for habit in habits}
         selected_habit = st.selectbox("Habit/Activity", list(habit_options.keys()), key="log_habit")
-        habit_id = habit_options[selected_habit]
+        habit_id = habit_options.get(selected_habit) if selected_habit else None
         
         # Show the rate for the selected habit
         selected_habit_data = next((h for h in habits if h['id'] == habit_id), None)
@@ -451,7 +451,7 @@ def show_activity_form(user_id: str, habits: list):
                 st.error(f"💸 {rate_text}")
     
     # Real-time value calculation (outside form)
-    if selected_habit_data:
+    if selected_habit_data and habit_id:
         calculated_value = hours * selected_habit_data['rate']
         value_emoji = "💰" if calculated_value > 0 else "💸"
         
@@ -462,15 +462,21 @@ def show_activity_form(user_id: str, habits: list):
                 st.success(f"**{value_emoji} Total Value: ${calculated_value:.2f}**")
             else:
                 st.error(f"**{value_emoji} Total Value: ${calculated_value:.2f}**")
+    elif selected_habit:
+        st.markdown("---")
+        st.info("Select a habit/activity to see the value calculation")
     
     note = st.text_area("Note (optional)", placeholder="What did you work on?", key="log_note")
     
     # Submit button
     if st.button("Log Activity", key="log_submit"):
-        result = insert_log(user_id, log_date, hours, habit_id, note)
-        if result:
-            st.success("Activity logged successfully!")
-            st.rerun()
+        if habit_id is None:
+            st.error("Please select a habit/activity first!")
+        else:
+            result = insert_log(user_id, log_date, hours, habit_id, note)
+            if result:
+                st.success("Activity logged successfully!")
+                st.rerun()
 
 # Main app UI
 def show_main_app():
