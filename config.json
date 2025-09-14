@@ -1,0 +1,39 @@
+{
+  "default_categories": [
+    {
+      "name": "Work",
+      "rate": 50.00,
+      "description": "Professional work activities"
+    },
+    {
+      "name": "Personal",
+      "rate": 20.00,
+      "description": "Personal productive activities"
+    },
+    {
+      "name": "Personal Development",
+      "rate": 30.00,
+      "description": "Learning and skill development"
+    },
+    {
+      "name": "Habit",
+      "rate": 25.00,
+      "description": "Healthy habits like gym, reading"
+    },
+    {
+      "name": "Social Media",
+      "rate": -15.00,
+      "description": "Time spent on social media platforms"
+    }
+  ],
+  "default_settings": {
+    "savings_goal": 100000.00,
+    "currency": "USD"
+  },
+  "app_config": {
+    "title": "Productivity Tracker",
+    "icon": "⏰",
+    "theme_color": "#1f77b4",
+    "background_color": "#ffffff"
+  }
+}
